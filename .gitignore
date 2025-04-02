@@ -1,0 +1,23 @@
+#            Ignorar dependencias de Node.js
+node_modules
+package-lock.json
+yarn.lock
+
+# Ignorar archivos de compilación de TypeScript
+dist/
+build/
+*.d.ts
+
+# Ignorar configuración de TypeScript
+tsconfig.tsbuildinfo
+
+# Ignorar archivos de entorno
+.env
+
+# Ignorar configuraciones del editor
+.vscode/
+.idea/
+}
+
+#ignorar script a base de datos
+basedatos.ts
