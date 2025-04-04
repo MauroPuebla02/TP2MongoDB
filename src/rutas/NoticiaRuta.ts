@@ -193,12 +193,94 @@ async function buscarPaisesEntrePoblacion(min : number, max:number){
         console.log(`El valor minimo (${min}) debe ser mayor que el valor maximo ${max}`)
     }
 }
+async function buscarPaisesPorNombre(name : string){
+    if(name.length> 0){
+        const { db, client } = await connection(); 
+        const result = await db.collection("paises").find({"nombrePais": name}).sort({"nombrePais" : -1}).toArray();
+        if(result){        
+            console.log(`Los país encontrado son:`);
+            mostrarPaises(result);
+        }else{
+            console.log("No se encontraron paises que cumplan la población especificadad");
+        }
+        // Esto cierra la conexión
+        await client.close();        
+        console.log("✅ Conexión a Mongo cerrada");
+    }else{
+        console.log(`El valor inresado no puede ser vacio`)
+    }
+}
+async function buscarTodosSalteandoXCantidad(cant : number){
+    if(cant > 0){
+        const { db, client } = await connection(); 
+        const result = await db.collection("paises").find().skip(cant).toArray();
+        if(result){        
+            console.log(`Los país encontrado son:`);
+            mostrarPaises(result);
+        }else{
+            console.log("No se encontraron paises que cumplan la población especificadad");
+        }
+        // Esto cierra la conexión
+        await client.close();        
+        console.log("✅ Conexión a Mongo cerrada");
+    }else{
+        console.log(`El valor inresado no puede ser menor a cero (0)`)
+    }
+}
+
+async function buscarPaisesQueContenga(busqueda : string){
+    if(busqueda.length> 0){
+        const { db, client } = await connection(); 
+        const result = await db.collection("paises").find({ "nombrePais": { $regex: busqueda, $options: "i" } }).toArray();   
+        if(result){        
+            console.log(`Los país encontrado son:`);
+            mostrarPaises(result);
+        }else{
+            console.log("No se encontraron paises que cumplan la población especificadad");
+        }
+        // Esto cierra la conexión
+        await client.close();        
+        console.log("✅ Conexión a Mongo cerrada");
+    }else{
+        console.log(`El valor inresado no puede ser vacio`)
+    }
+}
+
+async function crearIndice(campo : string){
+    if(campo.length> 0){
+        const { db, client } = await connection(); 
+        const result = await db.collection("paises").createIndex({ campo: 1 });   
+        if(result){        
+            console.log(`Indice creado con exito`);
+        }else{
+            console.log("no se creo el indice especificado");
+        }
+        // Esto cierra la conexión
+        await client.close();        
+        console.log("✅ Conexión a Mongo cerrada");
+    }else{
+        console.log(`El valor inresado no puede ser vacio`)
+    }
+}
 
 // llenarBase();
+
 //  buscarPorRegion("Americas"); 
+
 //buscarPorRegionYPoblacion("Americas",100000000);
+
 //  buscarPorNoRegion("Africa");
+
 // actualizaNombrePaisYPoblacion("Albania",{nombrePais: "Egipto",poblacion: 95000000});
+
 // eliminarPaisPorCodigo(258);
- /* 5.6)_ El Metodo drop() y dropDataBase() eliminan completamente tanto la colección como la base de datos, perdiendo los registros(salvo un bk) y liberando el espacio en memoria  */
- buscarPaisesEntrePoblacion(50000000,150000000);
+
+ //  buscarPaisesEntrePoblacion(50000000,150000000);
+
+//  buscarPaisesPorNombre("Argentina");
+
+// buscarTodosSalteandoXCantidad(80);
+
+//  buscarPaisesQueContenga("ar");
+
+// crearIndice("codigoPais");

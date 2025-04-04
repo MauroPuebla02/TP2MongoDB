@@ -1,0 +1,20 @@
+5.6)_ El Metodo drop() y dropDataBase() eliminan completamente tanto la colección como la base de datos, perdiendo los registros(salvo un bk)
+ y liberando el espacio en memoria .
+
+5.9)_ el comando skip en mongo se usa para saltear la cantidad de registros que se indica entre paretensis similar al offset en sql.
+
+5.10)_ Se usan expresiones como: $regex: "^A" para que empiece con lo indicado
+                                     $regex: "ia$" para las que terminen con lo indicado
+                                     $regex: "gen" para que contenga lo indicado
+                                     $options: "i" se puede usar tambien para que ignore mayusculas y minusculas.
+
+5.12)_ para realizar un BK se puede utilizar dos tecnicas, se puede ir a la carpeta de mongo por defecto "C:\data\db\"
+y desde ahi crear una copia fisica de los archivos aunque no es recomendable y debe estar el servicio de mongo
+completamente frenado o apagado, a fin de evitar que se creen archivos corruptos o bloquedos (mongod.lock).
+    Otra opcion mas segura es ir a la carpeta por defecto "C:\Program Files\MongoDB\Tools\100\bin\"
+y desde ahi por terminar utilizar el comando "mongodump --db [coleccion a guardar] --out ./[carpeta donde se guarda]"
+se puede agregar usuario y contraseña "mongodump --db [] --username admin --password 1234 --authenticationDatabase admin --out ./[]"
+ y para restaurarlo "mongorestore --db [coleccion] ./[carpeta donde se guardo]/[coleccion]"
+ esto ofrece una forma de BK mas Rápida, limpia, segura y portable
+"
+
